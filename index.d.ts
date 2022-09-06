@@ -941,7 +941,7 @@ declare namespace Eris {
     icon: string | null;
     id: string;
     name: string;
-    summary: string;
+    summary: ""; // Returns an empty string
   }
   interface IntegrationOptions {
     enableEmoticons?: string;
@@ -1698,9 +1698,10 @@ declare namespace Eris {
       directMessages:         4096;
       directMessageReactions: 8192;
       directMessageTyping:    16384;
+      messageContent:         32768;
       allNonPrivileged:       32509;
-      allPrivileged:          258;
-      all:                    32767;
+      allPrivileged:          33026;
+      all:                    65535;
     };
     InteractionResponseTypes: {
       PONG:                                    1;
@@ -2368,8 +2369,6 @@ declare namespace Eris {
     executeWebhook(webhookID: string, token: string, options: WebhookPayload): Promise<void>;
     followChannel(channelID: string, webhookChannelID: string): Promise<ChannelFollow>;
     getActiveGuildThreads(guildID: string): Promise<ListedGuildThreads>;
-    /** @deprecated */
-    getActiveThreads(channelID: string): Promise<ListedChannelThreads>;
     getArchivedThreads(channelID: string, type: "private", options?: GetArchivedThreadsOptions): Promise<ListedChannelThreads<PrivateThreadChannel>>;
     getArchivedThreads(channelID: string, type: "public", options?: GetArchivedThreadsOptions): Promise<ListedChannelThreads<PublicThreadChannel>>;
     getBotGateway(): Promise<{ session_start_limit: { max_concurrency: number; remaining: number; reset_after: number; total: number }; shards: number; url: string }>;
@@ -3493,8 +3492,6 @@ declare namespace Eris {
     deleteMessages(messageIDs: string[], reason?: string): Promise<void>;
     edit(options: Omit<EditChannelOptions, "icon" | "ownerID">, reason?: string): Promise<this>;
     editMessage(messageID: string, content: MessageContentEdit): Promise<Message<this>>;
-    /** @deprecated */
-    getActiveThreads(): Promise<ListedChannelThreads>;
     getArchivedThreads(type: "private", options?: GetArchivedThreadsOptions): Promise<ListedChannelThreads<PrivateThreadChannel>>;
     getArchivedThreads(type: "public", options?: GetArchivedThreadsOptions): Promise<ListedChannelThreads<PublicThreadChannel>>;
     getInvites(): Promise<(Invite<"withMetadata", this>)[]>;
